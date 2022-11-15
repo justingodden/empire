@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/justingodden/empire/pkg/evaluator"
 	"github.com/justingodden/empire/pkg/lexer"
+	"github.com/justingodden/empire/pkg/object"
 	"github.com/justingodden/empire/pkg/parser"
 )
 
@@ -13,6 +15,7 @@ const PROMPT = ">> "
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
+	env := object.NewEnvironment()
 
 	for {
 		fmt.Fprint(out, PROMPT)
@@ -31,8 +34,11 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		io.WriteString(out, program.String())
-		io.WriteString(out, "\n")
+		evaluated := evaluator.Eval(program, env)
+		if evaluated != nil {
+			io.WriteString(out, evaluated.Inspect())
+			io.WriteString(out, "\n")
+		}
 	}
 }
 
