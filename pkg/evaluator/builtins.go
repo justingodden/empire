@@ -1,6 +1,8 @@
 package evaluator
 
 import (
+	"fmt"
+
 	"github.com/justingodden/empire/pkg/object"
 )
 
@@ -19,6 +21,9 @@ var builtins = map[string]*object.Builtin{
 	},
 	"push": &object.Builtin{
 		Fn: pushBuiltin,
+	},
+	"print": &object.Builtin{
+		Fn: printBuiltin,
 	},
 }
 
@@ -116,4 +121,13 @@ func pushBuiltin(args ...object.Object) object.Object {
 	copy(newElements, arr.Elements)
 	newElements[length] = args[1]
 	return &object.Array{Elements: newElements}
+}
+
+func printBuiltin(args ...object.Object) object.Object {
+	for _, arg := range args {
+		fmt.Print(arg.Inspect() + " ")
+	}
+	fmt.Println()
+
+	return NULL
 }
