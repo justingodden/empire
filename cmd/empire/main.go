@@ -3,17 +3,17 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/user"
 
 	"github.com/justingodden/empire/pkg/repl"
+	"github.com/justingodden/empire/pkg/runner"
 )
 
 func main() {
-	u, err := user.Current()
-	if err != nil {
-		panic(err)
+	if len(os.Args) == 1 {
+		repl.Start(os.Stdin, os.Stdout)
+	} else if len(os.Args) == 2 {
+		runner.Run(os.Args[1])
+	} else {
+		fmt.Println("[Error] Empire: Too many arguments.")
 	}
-	fmt.Printf("Hello %s! This is the Empire progamming Language!\n", u.Username)
-	fmt.Print("Feel free to type in commands\n")
-	repl.Start(os.Stdin, os.Stdout)
 }
