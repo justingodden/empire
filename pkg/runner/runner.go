@@ -10,6 +10,7 @@ import (
 	"github.com/justingodden/empire/pkg/lexer"
 	"github.com/justingodden/empire/pkg/object"
 	"github.com/justingodden/empire/pkg/parser"
+	"github.com/justingodden/empire/pkg/preprocessor"
 )
 
 func Run(filePath string) {
@@ -21,8 +22,9 @@ func Run(filePath string) {
 	if err != nil {
 		panic(err)
 	}
-
-	l := lexer.New(input)
+	pp := preprocessor.New(input)
+	pp.ResolveImports()
+	l := lexer.New(pp.Output)
 	p := parser.New(l)
 	env := object.NewEnvironment()
 

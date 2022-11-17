@@ -149,6 +149,28 @@ func TestIfElseExpression(t *testing.T) {
 	}
 }
 
+func TestWhileExpression(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected interface{}
+	}{
+		{"while (false) { 10 }", nil},
+		{"let a = 5; while (a != 5) { 10 }", nil},
+		{"let a = 0; while (a == 0) { 10 ; let a = a + 1; }", nil},
+		{"let a = 0; while (a < 5) { let a = a + 1 } ; a;", 5},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		integer, ok := tt.expected.(int)
+		if ok {
+			testIntegerObject(t, evaluated, int64(integer))
+		} else {
+			testNullObject(t, evaluated)
+		}
+	}
+}
+
 func testNullObject(t *testing.T, obj object.Object) bool {
 	if obj != NULL {
 		t.Errorf("object is not NULL. got=%T (%+v)", obj, obj)
