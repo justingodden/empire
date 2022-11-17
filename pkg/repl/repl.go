@@ -14,6 +14,7 @@ import (
 	"github.com/justingodden/empire/pkg/lexer"
 	"github.com/justingodden/empire/pkg/object"
 	"github.com/justingodden/empire/pkg/parser"
+	"github.com/justingodden/empire/pkg/preprocessor"
 )
 
 const PROMPT = ">> "
@@ -50,12 +51,19 @@ func Start(in io.Reader, out io.Writer) {
 			input += " " + line
 
 			lineRStrip := strings.TrimRight(line, " \n\t\r")
-			lastChar := string(lineRStrip[len(lineRStrip)-1])
-			multiLine = !(lastChar == ";")
+
+			lastChar := ""
+			if len(lineRStrip) != 0 {
+				lastChar = string(lineRStrip[len(lineRStrip)-1])
+			}
+
+			multiLine = !((lastChar == ";") || len(lineRStrip) == 0)
 			newLine = multiLine
 		}
 
-		l := lexer.New(input)
+		pp := preprocessor.New(input)
+		pp.ResolveImports()
+		l := lexer.New(pp.Output)
 		p := parser.New(l)
 
 		program := p.ParseProgram()
