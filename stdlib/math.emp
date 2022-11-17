@@ -1,0 +1,19 @@
+let mathAdd = fn(a, b) { return a + b };
+
+let mathPow = fn(n, pow) {
+    if (pow < 1) {
+        return 1 ;
+    } else {
+        if (pow == 1) {
+            return n;
+        } else {
+            let i = 0;
+            let res = n;
+            while (i < pow-1) {
+                let res = res * n;
+                let i = i + 1;
+            }
+            return res;
+        }
+    }
+}
