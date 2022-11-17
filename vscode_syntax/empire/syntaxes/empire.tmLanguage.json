@@ -1,0 +1,71 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Empire",
+	"scopeName": "source.emp",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#expression"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.empire",
+					"match": "\\b(if|while|return)\\b"
+				},
+				{
+					"name": "variable",
+					"match": "let"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.empire",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.empire",
+					"match": "\\\\."
+				}
+			]
+		},
+		"expression": {
+			"patterns": [
+				{
+					"include": "#letter"
+				},
+				{
+					"include": "#paren-expression"
+				}
+			]
+		},
+		"paren-expression": {
+			"begin": "\\(",
+			"end": "\\)",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.paren.open"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.paren.close"
+				}
+			},
+			"name": "expression.group",
+			"patterns": [
+				{
+					"include": "#expression"
+				}
+			]
+		}
+	}
+}

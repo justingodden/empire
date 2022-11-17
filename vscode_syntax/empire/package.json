@@ -1,0 +1,25 @@
+{
+  "name": "empire",
+  "displayName": "Empire",
+  "description": "Syntax highlighting for empire lang",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.73.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "empire",
+      "aliases": ["Empire", "empire"],
+      "extensions": [".emp"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "empire",
+      "scopeName": "source.emp",
+      "path": "./syntaxes/empire.tmLanguage.json"
+    }]
+  }
+}
