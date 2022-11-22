@@ -1,6 +1,7 @@
 # The Empire Programming Language
-<center>🚀🚀🚀</center>
-
+<p align="center">
+🚀🚀🚀
+</p>
 Empire is an interpretted language written 100% in Go, created to learn how programming languages are built, but ended up being pretty feature-full!
 
 Including the following:
